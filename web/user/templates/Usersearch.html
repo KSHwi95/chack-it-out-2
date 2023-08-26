@@ -1,0 +1,163 @@
+{% extends "base.html" %} {% block title %}
+<title>회원가입</title>
+{% endblock %} {% block header %}
+<!-- 헤더-->
+{% endblock %} {% block contents %}
+<!-- 콘텐츠 -->
+
+{% if query %}
+<div class="container">
+  <div class="row mt-5"></div>
+  <div
+  style="
+  margin-left: 100px;
+  width: 1000px;
+  height: 72px;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 40px;
+"
+  >
+    <form action="" method="get" action=".">
+      <select
+        name="selectbar"
+        id="selectbar"
+        style="
+          height: 65px;
+          width: 300px;
+          margin-top: 2.5px;
+          border: 0.2px solid transparent;
+          border-top-left-radius: 40px;
+          border-bottom-left-radius: 40px;
+        "
+      >
+        <option class="text-center" value="1">유저명</option>
+        <option class="text-center" value="2">아이디</option>
+      </select>
+      <input
+        type="search"
+        name="searchword"
+        id="search"
+        style="height: 65px; width: 600px; border: 0.2px solid white"
+      />
+      <input
+        type="submit"
+        value="🔍"
+        style="
+          height: 65px;
+          width: 88px;
+          background-color: transparent;
+          border: 0.5px solid white;
+          border-top-right-radius: 40px;
+          border-bottom-right-radius: 40px;
+        "
+      />
+    </form>
+  </div>
+  <div class="row mt-5"></div>
+</div>
+</div>
+<div class="container">
+  <div class="row">
+    <div
+      class="col-12"
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        font-weight: bold;
+        font-size: 30px;
+        color: rgba(43, 40, 40, 0.993);
+      "
+    >
+      🔎「{{query}}」에 대한 검색 결과
+    </div>
+
+    <div class="container">
+      <div>
+        <div style="overflow: auto; width: auto; height: 250px">
+          <table class="table caption-top table-hover">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">유저 아이디</th>
+                <th scope="col">유저 이름</th>
+                <th scope="col">가입일자</th>
+                <th scope="col">유저 페이지</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for user in users %}
+              <tr>
+                <th scope="row">{{user.id}}</th>
+                <td>{{user.user_id}}</td>
+                <td>{{user.user_name}}</td>
+                <td>{{user.registered_dttm|date:'Y년 m월 d일'}}</td>
+                <td>
+                  <a
+                    href="/user/userpage/{{user.id}}"
+                    style="font-size: large; color: black"
+                    >방문하기</a
+                  >
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="container" style="height: 400px;">
+  <div class="row mt-5"></div>
+  <div
+    style="
+      margin-top: 100px;
+      margin-left: 100px;
+      width: 1000px;
+      height: 72px;
+      border: 1px solid rgb(0, 0, 0);
+      border-radius: 40px;
+    "
+  >
+    <form action="" method="get" action=".">
+      <select
+        name="selectbar"
+        id="selectbar"
+        style="
+          height: 65px;
+          width: 300px;
+          margin-top: 2.5px;
+          border: 0.2px solid transparent;
+          border-top-left-radius: 40px;
+          border-bottom-left-radius: 40px;
+        "
+      >
+        <option class="text-center" value="1">유저명</option>
+        <option class="text-center" value="2">아이디</option>
+      </select>
+      <input
+        type="search"
+        name="searchword"
+        id="search"
+        style="height: 65px; width: 600px; border: 0.2px solid white"
+      />
+      <input
+        type="submit"
+        value="🔍"
+        style="
+          height: 65px;
+          width: 88px;
+          background-color: transparent;
+          border: 0.5px solid white;
+          border-top-right-radius: 40px;
+          border-bottom-right-radius: 40px;
+        "
+      />
+    </form>
+  </div>
+  <div class="row mt-5"></div>
+</div>
+</div>
+{% endif %} 
+{% endblock %}

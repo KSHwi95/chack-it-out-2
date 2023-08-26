@@ -1,0 +1,230 @@
+{% extends "base.html" %} {% block title %}
+<title>독서모임</title>
+{% endblock %}
+
+<!-- css -->
+{% block css %}
+<style>
+  .img {
+    box-shadow: 0px 0px 5px 1px rgb(190, 192, 190);
+    border-radius: 10%;
+  }
+
+  .img:hover {
+    filter: brightness(50%);
+    transition: 0.5s;
+  }
+  /* 이미지영역 */
+  .img_area {
+    display: inline-block;
+    position: relative;
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+
+  /* 이미지가 뜨면 제일앞에 표시 */
+  .img_area:hover > .hover_text {
+    display: block;
+  }
+
+  /* 텍스트 평소에는 안보임*/
+  .hover_text {
+    display: none;
+  }
+
+  .hover_text {
+    position: absolute;
+    transition: 10ms;
+    top: 120px;
+    left: 30px;
+    width: 230px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    font-weight: 600;
+    font-size: 25px;
+  }
+</style>
+{% endblock %}
+
+<!-- 헤더 -->
+{% block header %}
+<div class="heade border-bottom" style="height: 350px; background-color: rgb(243, 240, 226);">
+  <div class="container">
+    <div style="overflow: auto; width: 100%; height: 350px">
+      <div class="row">
+        <div class="col-12 text-center"><br /><br /></div>
+        <div class="row">
+        <pre style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 15px;">
+    ❗ 공지사항 ❗     
+
+    안녕하세요, "돈독모" 회원 여러분!
+    가입을 진심으로 환영합니다. 아래의 공지사항을 꼭 읽어주시기 바랍니다.
+
+    💛 모임 참여 💛
+
+    · 독서모임에 많이 참여할수록, 여러분의 성향에 딱 맞는 도서를 추천해 드릴 수 있습니다.
+    · 웹사이트를 더욱 풍성하게 즐기고 싶다면 가입해서 함께 하세요!😜
+
+    💛 서로 존중하고 배려하는 분위기를 유지하기 위해 규칙을 지켜주세요. 💛 
+    · 욕설이나 비방, 불쾌한 행동은 삼가해주시고, 다른 회원들과 긍정적인 대화와 토론을 이어나가는 데 동참해주세요.
+    · 커뮤니티 내에서의 불만이나 문제가 있을 경우, 운영자에게 알려주시면 신속히 조치를 취하도록 하겠습니다.
+
+    💌 운영자 이메일 : bassstg@naver.com
+
+    💛 공지사항 확인 💛 
+    · 커뮤니티의 소식과 중요한 공지사항은 정기적으로 확인해주시기 바랍니다. 
+    · 주기적인 방문을 통해 새로운 소식을 놓치지 않고 참여하실 수 있습니다.
+
+    좋은 독서 경험과 유익한 커뮤니티 활동이 되길 바랍니다.
+    감사합니다!
+        
+    - 운영자 올림
+</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- 콘텐츠 -->
+{% block contents %} 
+<!-- 로그인 -->
+{% if request.session.user %}
+<div class="container">
+  <div>
+    <div
+    style="
+      font-size: 30px;
+      margin-top: 30px;
+      color: rgb(113, 70, 70);
+      font-weight: bold;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont,
+        'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+        'Helvetica Neue', sans-serif;
+    "
+  >
+    📌모집중인 모임
+  </div>
+    <div style="overflow: auto; width: auto; height: 250px">
+      <table class="table caption-top table-hover">
+        <caption>
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">모임일자</th>
+            <th scope="col">모임장소</th>
+            <th scope="col">도서</th>
+            <th scope="col">작성자</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for community in communities %}
+          <tr onclick="location.href='/community/detail/{{community.id}}'">
+            <th scope="row">{{community.id}}</th>
+            <td>{{community.meeting_date|date:'Y년 m월 d일 h시 i분'}}</td>
+            <td>{{community.meeting_place}}</td>
+            <td>{{community.book}}</td>
+            <td>{{community.creator}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div
+  style="
+    font-size: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    color: rgb(113, 70, 70);
+    font-weight: bold;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont,
+      'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+      'Helvetica Neue', sans-serif;
+  "
+>
+  💵돈.독.모 에서 지금까지 함께한 도서들입니다.
+</div>
+<div class="row">
+  <div class="col-9" style="overflow: auto;height: 400px">
+    <div class="row">
+      {% for book in result %}
+      <div class="col-4">
+        <a href="/book/search/result/{{book.id}}" class="img_area"
+          ><img
+            class="img"
+            src="{{book.book_cover}}"
+            style="
+              height: 380px;
+              width: 280px;
+              margin-right: 10px;
+              margin-bottom: 10px;
+            "
+          />
+          <p class="hover_text">{{book.book_title}}</p></a
+        ><span class="text-center">{{book.book_title}}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="col-3">
+      <button style="border: 0.5px solid transparent; background-color: rgb(241, 233, 222); width:150px;height: 150px;margin-bottom: 20px; margin-top: 80px;box-shadow: 0px 0px 5px 1px rgb(190, 192, 190);margin-left: 50px;border-radius: 50%  ;"><a style="color: rgb(72, 69, 69); font-size: larger; font-weight: bold;" onclick="location.href='/community/new/'"><span style="font-size: 40px;">📖</span><p>새로 만들기</p>
+      <p></p></a></button>
+      <div>⭐ 도서입력 : ISBN | ⭐<a href="/book/search/" target="_blank">확인하기</a> </div>
+    </div>
+      <div>
+        <div
+        style="
+          font-size: 30px;
+          margin-top: 30px;
+          margin-bottom: 30px;
+          color: rgb(113, 70, 70);
+          font-weight: bold;
+          font-family: system-ui, -apple-system, BlinkMacSystemFont,
+            'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+            'Helvetica Neue', sans-serif;
+        "
+      >
+        ⭐종료된 모임
+      </div>
+        <div style="overflow: auto; width: auto; height: 250px">
+          <table class="table caption-top table-hover">
+            <caption>
+
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">모임일자</th>
+                <th scope="col">모임장소</th>
+                <th scope="col">도서</th>
+                <th scope="col">작성자</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for community in endcommunities %}
+              <tr onclick="location.href='/community/detail/{{community.id}}'">
+                <th scope="row">{{community.id}}</th>
+                <td>{{community.meeting_date|date:'Y년 m월 d일 H시 i분'}}</td>
+                <td>{{community.meeting_place}}</td>
+                <td>{{community.book}}</td>
+                <td>{{community.creator}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    {% else %}
+    <div class="row">
+      <div class="col-12 text-center">
+        로그인하시면 독서모임에 함께 참여하실 수 있습니다.
+      </div>
+    </div>
+    {% endif %}
+{% endblock %}

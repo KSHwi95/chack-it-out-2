@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+<!-- 타이틀 -->
+{% block title %}
+<title>검색 결과</title>
+{% endblock %}
+<!-- css -->
+{% block css%}
+<style>
+  ul,
+  li {
+    list-style: none;
+  }
+  .blind {
+    position: absolute;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .vertical_chart_box {
+    position: relative;
+    .chart_box {
+      position: relative;
+      margin-bottom: 45px;
+      padding-left: 20px;
+      box-sizing: border-box;
+      height: 200px;
+    }
+
+    .axis_x {
+      display: -webkit-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+      justify-content: center;
+      position: relative;
+      padding: 0;
+      box-sizing: border-box;
+      height: 100%;
+      border-bottom: 1px solid #d3d3d3;
+      .item {
+        flex: 1;
+        position: relative;
+        .text_box {
+          position: absolute;
+          bottom: -43px;
+          left: 50%;
+          text-align: center;
+          -webkit-transform: translate(-50%, 0);
+          -ms-transform: translate(-50%, 0);
+          -o-transform: translate(-50%, 0);
+          transform: translate(-50%, 0);
+          .day {
+            display: block;
+            font-size: 12px;
+            line-height: 19px;
+            color: #4a4a4a;
+            &.sat {
+              color: #3475ed;
+            }
+            &.sun {
+              color: green;
+            }
+          }
+          .time {
+            display: block;
+            margin-top: 3px;
+            font-size: 12px;
+            color: #999;
+          }
+        }
+      }
+      .graph {
+        display: -webkit-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        display: flex;
+        flex-direction: column-reverse;
+        position: relative;
+        margin: 0 auto;
+        padding: 0;
+        width: 35px;
+        height: 100%;
+        background: #e8e8e8;
+        border-radius: 3px 3px 0 0;
+        overflow: hidden;
+        .time {
+          display: block;
+          position: relative;
+          margin-bottom: -4px;
+          padding-top: 4px;
+          box-sizing: content-box;
+          width: 100%;
+          border-radius: 3px 3px 0 0;
+          &.data1 {
+            background: green;
+            z-index: 3;
+          }
+          &.data2 {
+            background: #30d97d;
+            z-index: 2;
+          }
+          &.data3 {
+            background: red;
+            z-index: 1;
+          }
+        }
+      }
+      button.graph {
+        border: 0;
+      }
+    }
+  }
+
+  .comments {
+    padding: 10px;
+  }
+  .form {
+    width: 50%;
+    padding: 10px;
+  }
+</style>
+{% endblock %}
+<!-- 헤더-->
+
+{% block header %}
+<!-- 헤더-->
+<header class="border-bottom">
+  <div class="container">
+    <div class="row mt-5"></div>
+    <form action="" method="get" action=".">
+      <select name="selectbar" id="selectbar" style="height: 30px">
+        <option value="1">도서명</option>
+        <option value="2">작가</option>
+        <option value="3">ISBN</option>
+      </select>
+      <input type="search" name="searchword" id="search" />
+      <input
+        type="submit"
+        value="🔍"
+        style="
+          background-color: transparent;
+          border: 0.5 solid;
+          border-radius: 10%;
+        "
+      />
+    </form>
+    <div class="row mt-5"></div>
+  </div>
+</header>
+{% endblock %}
+<!-- 콘텐츠 -->
+{% block contents %}
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <h5 style="margin-top: 20px">리뷰</h6>
+      <div style="overflow: auto; width:550px; height: 200px;border: 1px solid gray; border-radius: 3px; ">
+        <div class="comments">
+          <ul id="comment-list">
+            {% for review in allreview %}
+              <li>❝{{review.review}}❞</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      <br><br>
+      <span class="text-center" style="font-size: 20px; margin-top: 50px;background-color: antiquewhite; border-radius: 3px;"> 👍 or 👎 </span>
+      <br>   
+      <div style="overflow: auto; width: 500px; height: 400px">
+        <div class="vertical_chart_box">
+          <div class="chart_box">
+            <ul class="axis_x">
+              <li class="item">
+                <div class="text_box">
+                  <strong class="day">👍</strong>
+                  <strong class="day">{{pos}}</strong>
+                </div>
+                <button type="button" class="graph">
+                  <span class="time data1" style="height: {{positive}}%"
+                    >
+                </button>
+              </li>
+              <li class="item">
+                <div class="text_box">
+                  <strong class="day">👎</strong>
+                  <strong class="day">{{neg}}</strong>
+                </div>
+                <button type="button" class="graph">
+                  <span class="time data3" style="height: {{negative}}%"
+                    ><span class="blind">
+                </button>
+              </li>
+            </ul>
+            <span>출처 : 알라딘</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="form">
+        <h5 style="margin-top: 10px">작성하기</h6>
+        <form action="." method="get">
+          <input type="text" id="comment-input" name="comment-input" maxlength="2000" placeholder="리뷰 작성 후 [⏎Enter]"  style="width: 400px; height:50px; ">
+          <br/>
+        </form>
+        <br>
+        <button onclick="location.href='/book/search/result/{{pk}}'">앞으로 가기</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+<!-- js -->
+{% block script %}
+
+{% endblock %}

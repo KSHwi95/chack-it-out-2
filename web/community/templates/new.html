@@ -1,0 +1,74 @@
+{% extends "base.html" %} {% block title %}
+<title>새 독서 모임 만들기</title>
+{% endblock %}
+
+<!-- css -->
+{% block css %} {% endblock %}
+
+<!-- 헤더 -->
+
+<!-- 콘텐츠 -->
+{% block contents %}
+
+<div class="container">
+  <div class="row" style="margin-top: 100px;margin-bottom: 100px;">
+    <h4 class="text-center" style="margin-bottom: 50px; font-size: 40px;"> 새 모 임 　만 들 기</h4>
+    <div class="col-2 text-center"></div>
+    <div class="col-4">
+      <form method="post" action=".">
+        {% csrf_token %}
+        <div class="form-group">
+          <span style="display: inline; margin-right: 65px">모임 날짜</span>
+          <input
+            type="datetime-local"
+            class="form-control"
+            id="meeting_date"
+            name="meeting_date"
+            style="margin-bottom: 30px; width: 250px; height: 50px; display: inline-block"
+          />
+        </div>
+        <div class="form-group">
+          <span style="display: inline; margin-right: 40px">🔑도서 ISBN</span>
+          <input
+            type="text"
+            class="form-control"
+            id="book"
+            placeholder="📖 도서검색으로 ISBN 확인"
+            name="book"
+            style=" width: 250px; height: 50px; display: inline-block"
+          />
+        </div>
+        <a type="button" href="/book/search/" target="_blank" style="margin-right: 40px;">도서 검색</a>
+        <div class="form-group">
+          <span style="display: inline; margin-right: 65px">모임 장소</span>
+          <input
+            type="text"
+            class="form-control"
+            id="meeting_place"
+            placeholder="모임 장소"
+            maxlength="20"
+            name="meeting_place"
+            style="margin-bottom: 30px; width: 250px; height: 50px; display: inline-block"
+          />
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="form-group">
+          <label for="description">모임소개</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            maxlength="999"
+            style="height: 120px; margin-bottom: 20px;"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">만들기</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+<!-- js -->
+{% block script %} {% endblock %}

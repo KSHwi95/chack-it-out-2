@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+<!-- 타이틀 -->
+{% block title %}
+<title>로그인</title>
+{% endblock %}
+<!-- 헤더-->
+{% block header %} {% endblock %}
+<!-- 콘텐츠 -->
+{% block contents %}
+<div style="height: 500px">
+  <div class="container">
+    <div class="row" style="height: 150px; margin-top: 20px">
+      <div
+        class="col-12"
+        style="
+          font-size: 30px;
+          text-align: center;
+          margin: 0 auto;
+          margin-top: 70px;
+        "
+      >
+        C H A C K I T O U T　에 함께 하세요.
+      </div>
+    </div>
+    <!-- CONTENTS -->
+    <div class="row">
+      <div class="col-4 text-center"></div>
+      <div
+        class="col-4"
+        style="
+          border: 0.2px solid rgb(201, 200, 200);
+          border-radius: 10%;
+          padding-top: 30px;
+          padding-left: 20px;
+          padding-right: 20px;
+          padding-bottom: 30px;
+        ">
+        <form method="post" action=".">
+          {% csrf_token %}
+          <!-- 로그인폼 -->
+          {% for field in form %}
+          <div class="form-group">
+            <!-- widget :따로 설정한 타입 -->
+            <input
+              type="{{ field.field.widget.input_type }}"
+              class="form-control"
+              id="{{ field.name }}"
+              placeholder="🗝　{{ field.label }}"
+              name="{{ field.name }}"
+              style="margin-bottom: 40px; height: 50px"
+            />
+          </div>
+          {% endfor %}
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="
+              background-color: transparent;
+              color: rgb(56, 55, 55);
+              height: 30px;
+              margin-left: 160px;
+              margin-bottom: 10px;
+              border: 1px solid rgb(201, 200, 200);
+            "
+          >
+            로그인
+          </button>
+          {% if field.errors %}
+          <span style="color: red">{{ field.errors }}</span>
+          {% endif %}
+        </form>
+        <span style="margin-left: 80px">아이디가 없으신가요?</span>
+        <button
+          class="btn btn-primary"
+          onclick="location.href='/user/register'"
+          style="
+            margin-left: 10px;
+
+            height: 30px;
+            padding-bottom: 20px;
+            color: rgb(56, 55, 55);
+            background-color: transparent;
+            border: 1px solid rgb(201, 200, 200);
+          "
+        >
+          회원가입
+        </button>
+      </div>
+      <div class="col-4 text-center"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

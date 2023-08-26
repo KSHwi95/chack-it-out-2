@@ -1,0 +1,72 @@
+{% extends "base.html" %} {% block title %}
+<title>검색</title>
+{% endblock %}
+<!-- style -->
+{% block css %}
+<style>
+  .btn:hover {
+    filter: brightness(90%);
+    transition: 0.5s;
+  }
+</style>
+{% endblock %}
+<!-- 콘텐츠 -->
+{% block contents%}
+<div style="height: 500px">
+  <div class="container">
+    <div class="row" style="height: 400px">
+      <div class="col-6 text-center">
+        <div id="btnWrap" style="margin-top: 100px">
+          <button
+            typ="button"
+            class="btn"
+            id="popupBtn"
+            onclick="location.href='/user/search'"
+            style="
+              width: 250px;
+              height: 250px;
+              border-radius: 50%;
+              background-color: rgb(204, 204, 204);
+              border: 1px solid rgb(180, 176, 176);
+            "
+          >
+            <div style="font-size: 40px">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2815/2815428.png"
+                style="width: 120px"
+              />
+              <div style="font-size: 30px; font-weight: bold">유저검색</div>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <div class="col-6 text-center">
+        <div id="btnWrap" style="margin-top: 100px">
+          <button
+            typ="button"
+            class="btn"
+            id="popupBtn"
+            onclick="location.href='/book/search'"
+            style="
+              width: 250px;
+              height: 250px;
+              border-radius: 50%;
+              background-color: rgb(230, 230, 174);
+              border: 1px solid rgb(180, 176, 176);
+            "
+          >
+            <div style="font-size: 40px">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/2702/2702162.png"
+                style="width: 120px; margin-top: 10px"
+              />
+              <div style="font-size: 30px; font-weight: bold">도서검색</div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+<!-- 타이틀 -->
+{% block title %}
+<title>회원가입</title>
+{% endblock %}
+<!-- 콘텐츠 -->
+{% block contents %}
+<div style="height: 800px">
+  <div class="container">
+    <div class="row" style="height: 150px; margin-top: 50px">
+      <div
+        class="col-12"
+        style="
+          font-size: 30px;
+          text-align: center;
+          margin: 0 auto;
+          margin-top: 20px;
+        "
+      >
+        C H A C K I T O U T　에 함께 하세요.
+      </div>
+    </div>
+    <!-- CONTENTS -->
+    <div class="row">
+      <div class="col-2 text-center"></div>
+      <div class="col-4">
+        <!-- POST방식으로 전달 -->
+        <form method="post" action=".">
+          <!-- csrf_token : POST방식으로 데이터를 서버에 전송하기 위해서 필요한 토큰 -->
+          {% csrf_token %}
+          <div
+            style="
+              border-right: 0.2px solid rgb(201, 200, 200);
+              padding-top: 30px;
+              padding-left: 20px;
+              padding-right: 20px;
+              padding-bottom: 30px;
+            "
+          >
+            <h4 class="text-center">회 원 가 입</h4>
+            <div class="form-group">
+              <span style="display: inline; margin-right: 70px">ID</span>
+              <input
+                type="text"
+                class="form-control"
+                id="user_id"
+                placeholder="🗝 아이디"
+                name="user_id"
+                style="margin-bottom: 30px; width: 250px; height: 50px; display: inline-block"
+              />
+              <span>{{error}}</span>
+            </div>
+            <div class="form-group">
+              <span style="display: inline; margin-right: 55px">이름</span>
+              <input
+                type="text"
+                class="form-control"
+                id="user_name"
+                placeholder="🗝 이름"
+                name="user_name"
+                style="margin-bottom: 30px; width: 250px; height: 50px;display: inline-block"
+              />
+            </div>
+            <div class="form-group">
+              <span style="display: inline; margin-right: 23px">비밀번호</span>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="🗝 비밀번호"
+                name="password"
+                style="margin-bottom: 30px; width: 250px; height: 50px;display: inline-block"
+              />
+            </div>
+            <div class="form-group">
+              <span style="display: inline; margin-right: 40px">재확인</span>
+              <input
+                type="password"
+                class="form-control"
+                id="re-password"
+                placeholder="🗝 비밀번호 확인"
+                name="re-password"
+                style="margin-bottom: 30px; width: 250px; height: 50px;display: inline-block"
+              />
+            </div>
+          </div>
+
+          <!-- POST 방식 SUBMIT-->
+
+      </div>
+      <div class="col-4">
+        <div class="form-group">
+          <h4 class="text-center" style="margin-top: 10px">관심사 등록</h4>
+          <h6 style="background-color: rgb(246, 246, 236)">
+            📖 관심있는 주제를 체크해보세요
+          </h6>
+          {% for category in categories %}
+          {% if category.id == 10 %}
+          {% elif category.id == 4 %}
+          {% elif category.id == 1 %}
+          {% elif category.id == 5 %}
+          {% else %}
+          <input
+            id="selected"
+            type="checkbox"
+            name="selected"
+            value="{{category.id}}"
+            style="margin-bottom: 20px;"          
+            />　<span style=" font-size: 13px; font-weight: bold;">{{category.category}}</span>
+           
+          <br />
+          {% endif %}
+          {% endfor %}
+        </div>
+        <button type="submit" class="button">가입완료</button>
+      </form>
+      </div>
+      <div class="col-2 text-center"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}

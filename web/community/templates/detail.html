@@ -1,0 +1,152 @@
+{% extends "base.html" %} {% block title %}
+<title>커뮤니티 정보</title>
+{% endblock %}
+
+<!-- 헤더 -->
+{% block header %}
+<div
+  class="heade border-bottom"
+  style="height: 350px; background-color: rgb(243, 240, 226)"
+>
+  <div class="container">
+    <div style="overflow: auto; width: 100%; height: 350px">
+      <div class="row">
+        <div class="col-12 text-center"><br /><br /></div>
+        <div class="row">
+          <pre
+            style="
+              font-family: Verdana, Geneva, Tahoma, sans-serif;
+              font-size: 15px;
+            "
+          >
+    ❗ 공지사항 ❗     
+
+    안녕하세요, "돈독모" 회원 여러분!
+    가입을 진심으로 환영합니다. 아래의 공지사항을 꼭 읽어주시기 바랍니다.
+
+    💛 모임 참여 💛
+
+    · 독서모임에 많이 참여할수록, 여러분의 성향에 딱 맞는 도서를 추천해 드릴 수 있습니다.
+    · 웹사이트를 더욱 풍성하게 즐기고 싶다면 가입해서 함께 하세요!😜
+
+    💛 서로 존중하고 배려하는 분위기를 유지하기 위해 규칙을 지켜주세요. 💛 
+    · 욕설이나 비방, 불쾌한 행동은 삼가해주시고, 다른 회원들과 긍정적인 대화와 토론을 이어나가는 데 동참해주세요.
+    · 커뮤니티 내에서의 불만이나 문제가 있을 경우, 운영자에게 알려주시면 신속히 조치를 취하도록 하겠습니다.
+
+    💌 운영자 이메일 : bassstg@naver.com
+
+    💛 공지사항 확인 💛 
+    · 커뮤니티의 소식과 중요한 공지사항은 정기적으로 확인해주시기 바랍니다. 
+    · 주기적인 방문을 통해 새로운 소식을 놓치지 않고 참여하실 수 있습니다.
+
+    좋은 독서 경험과 유익한 커뮤니티 활동이 되길 바랍니다.
+    감사합니다!
+        
+    - 운영자 올림
+</pre
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block contents %}
+<div class="container">
+  <div class="row" style="margin-top: 40px; margin-bottom: 40px">
+    <div class="col-6 text-center">
+      <!-- 사진 표시 -->
+      <img
+        style="
+          height: 380px;
+          width: 280px;
+          margin-bottom: 20px;
+          box-shadow: 0px 0px 5px 1px rgb(190, 192, 190);
+          border-radius: 10%;
+        "
+        src="{{book.book_cover}}"
+      />
+      <br />
+      <a href="/book/search/result/{{book.id}}"> <h6>📰 책정보 보기</h6></a>
+    </div>
+    <div class="col-6">
+      <!-- 책소개 -->
+      <h3 style="font-weight: bold; margin-bottom: 10px; width: 500px">
+        📕 {{book.book_title}}
+      </h3>
+      <!-- 저자 -->
+      <h6
+        class="border-bottom"
+        style="
+          font-weight: bold;
+          height: 50px;
+          width: 500px;
+          margin-bottom: 20px;
+        "
+      >
+        ✍🏻　{{book.book_author}} | 📄p.{{book.book_page}}
+      </h6>
+      <!-- 모임소개 -->
+      <h6>모임 장소 　{{community.meeting_place}}</h6>
+      <h6>모임 일자 　{{community.meeting_date|date:'Y년 m월 d일 h시 i분'}}</h6>
+      <h6>
+        모임 주최자
+        <a href="/user/userpage/{{community.creator.id}}"
+          >{{community.creator.user_name}}({{community.creator}})</a
+        >
+      </h6>
+      <div style="margin-top: 30px">
+        <span style="font-weight: bold">소개</span>
+        <p
+          style="
+            height: 150px;
+            width: 500px;
+            border: 1px solid rgb(201, 200, 200);
+            border-radius: 5px;
+            padding: 2%;
+          "
+        >
+          {{community.description}}
+        </p>
+      </div>
+      <div>
+        👨‍👩‍👧‍👦Join with.. 👨‍👩‍👧‍👦
+        <br />
+        {% for member in members %}
+        <a href="/user/userpage/{{member.user.id}}"
+          >{{member.user.user_name}} ({{member.user}})</a
+        >
+        {% endfor %}
+      </div>
+
+      <form action="#" method="get">
+        <!-- 안 끝난 모임중 -->
+        {% if community.is_finished == 0 %}
+        <!-- 멤버 리스트에 없으면-->
+        {% if user.id not in memberls %}
+        <button id="join" name="join">참여하기</button>
+        <!-- 있으면 -->
+        {% else %} -현재 참여중입니다.- {% endif %}
+        <!-- 끝난모임은 -->
+        {% else %}
+        <br />
+        - 종료된 모임입니다. -
+        <a
+          href="/community/detail2/{{community.id}}"
+          target="_blank"
+          id="quit"
+          name="quit"
+          >모임후기</a
+        >
+        {% endif %}
+
+        <!-- 작성자는 종료 권한 -->
+        {% if user == community.creator %} {% if community.is_finished == 0 %}
+        <a href="/community/quit/{{community.id}}" id="quit" name="quit"
+          >모임 종료하기</a
+        >
+        {% endif %} {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

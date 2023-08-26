@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+<!-- 타이틀 -->
+{% block title %}
+<title>검색 결과</title>
+{% endblock %}
+<!-- css -->
+{% block css%}
+<style></style>
+{% endblock %}
+<!-- 헤더-->
+{% block header %}
+<!-- 헤더-->
+<header class="border-bottom">
+  <div class="container">
+    <div class="row mt-5"></div>
+    <form action="" method="get" action=".">
+      <select name="selectbar" id="selectbar" style="height: 30px">
+        <option value="1">도서명</option>
+        <option value="2">작가</option>
+        <option value="3">ISBN</option>
+      </select>
+      <input type="search" name="searchword" id="search" />
+      <input
+        type="submit"
+        value="🔍"
+        style="
+          background-color: transparent;
+          border: 0.5 solid;
+          border-radius: 10%;
+        "
+      />
+    </form>
+    <div class="row mt-5"></div>
+  </div>
+</header>
+{% endblock %}
+
+<!-- 콘텐츠 -->
+{% block contents %}
+
+<div class="container">
+  <div class="row" style="margin-top: 40px; margin-bottom: 40px">
+    <!-- One Side -->
+    <div class="col-6 text-center">
+      <!-- 사진 표시 -->
+      <img
+        style="
+          height: 380px;
+          width: 280px;
+          margin-bottom: 20px;
+          box-shadow: 0px 0px 5px 1px rgb(190, 192, 190);
+          border-radius: 10%;
+        "
+        src="{{book.book_cover}}"
+      />
+      <br />
+      <span style="font-size: 15px; margin-left: 50px">읽은책</span>
+      <span style="font-size: 15px; margin-left: 25px; margin-right: 35px"
+        >위시리스트</span
+      >
+      <form action="" method="get" action=".">
+        <input
+          style="margin-right: 50px"
+          type="submit"
+          value="➕"
+          name="reading"
+          id="reading"
+          style="background-color: white;"
+        />
+        <input type="submit" value="➕" name="wish" id="wish" />
+      </form>
+    </div>
+
+    <!-- other side -->
+    <div class="col-6">
+      <!-- 책소개 -->
+      <h3 style="font-weight: bold; margin-bottom: 10px; width: 500px">
+        📕 {{book.book_title}}
+      </h3>
+      <!-- 저자 -->
+      <h6
+        class="border-bottom"
+        style="font-weight: bold; height: 50px; width: 500px; margin-bottom: 20px;"
+      >
+        ✍🏻　{{book.book_author}} | 📄p.{{book.book_page}}
+      </h6>
+      <!-- 페이지 -->
+      <h6></h6>
+      <!-- 출간일 -->
+      <h6>발행일 　{{book.book_publishdate|date:'Y년 m월 d일'}}</h6>
+
+      <h6>ISBN　　{{book.book_isbn}}</h6>
+        <div style="margin-top: 30px;">
+          <span style="font-weight: bold;">소개</span>
+          <p style="height: 250px; width: 500px;border: 1px solid  rgb(201, 200, 200); border-radius: 5px; padding: 2%;" >{{book.book_description}}</p>
+        </div>
+        <input
+        type="button"
+        value="리뷰"
+        onclick="location.href='/book/search/result2/{{pk}}'"
+        style="width: 60px;"
+      />
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

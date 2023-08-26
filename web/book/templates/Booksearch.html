@@ -1,0 +1,194 @@
+{% extends "base.html" %} {% block title %}
+<title>도서검색</title>
+{% endblock %} {% block css%}
+<style>
+  .img {
+    box-shadow: 0px 0px 5px 1px rgb(190, 192, 190);
+    border-radius: 10%;
+  }
+
+  .img:hover {
+    filter: brightness(50%);
+    transition: 0.5s;
+  }
+  /* 이미지영역 */
+  .img_area {
+    display: inline-block;
+    position: relative;
+    padding-right: 10px;
+    padding-bottom: 10px;
+  }
+
+  /* 이미지가 뜨면 제일앞에 표시 */
+  .img_area:hover > .hover_text {
+    display: block;
+  }
+
+  /* 텍스트 평소에는 안보임*/
+  .hover_text {
+    display: none;
+  }
+
+  .hover_text {
+    position: absolute;
+    transition: 10ms;
+    top: 100px;
+    left: 30px;
+    width: 200px;
+    color: white;
+    -webkit-text-stroke: 1px black;
+    font-weight: 600;
+    font-size: 25px;
+  }
+</style>
+{% endblock %}
+<!-- 헤더-->
+{% block header %}
+<!-- 헤더-->
+{% endblock %}
+<!-- 내용 -->
+{% block contents %}
+<!-- 검색어 입력 -->
+{% if query %}
+<div class="container">
+  <div class="row mt-5"></div>
+  <div
+    style="
+      margin-left: 100px;
+      width: 1000px;
+      height: 72px;
+      border: 1px solid rgb(0, 0, 0);
+      border-radius: 40px;
+    "
+  >
+    <form action="" method="get" action=".">
+      <select
+        name="selectbar"
+        id="selectbar"
+        style="
+          height: 65px;
+          width: 300px;
+          margin-top: 2.5px;
+          border: 0.2px solid transparent;
+          border-top-left-radius: 40px;
+          border-bottom-left-radius: 40px;
+        "
+      >
+        <option class="text-center" value="1">도서명</option>
+        <option class="text-center" value="2">작가</option>
+        <option class="text-center" value="3">ISBN</option>
+      </select>
+      <input
+        type="search"
+        name="searchword"
+        id="search"
+        style="height: 65px; width: 600px; border: 0.2px solid white"
+      />
+      <input
+        type="submit"
+        value="🔍"
+        style="
+          height: 65px;
+          width: 88px;
+          background-color: transparent;
+          border: 0.5px solid white;
+          border-top-right-radius: 40px;
+          border-bottom-right-radius: 40px;
+        "
+      />
+    </form>
+  </div>
+  <div class="row mt-5"></div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div
+      class="col-12"
+      style="
+        margin-top: 40px;
+        margin-bottom: 40px;
+        font-weight: bold;
+        font-size: 30px;
+        color: rgba(43, 40, 40, 0.993);
+      "
+    >
+      🔎「{{query}}」에 대한 검색 결과
+    </div>
+    <div style="overflow: auto; width: 1320px; height: 400px">
+      <div class="row">
+        {% for book in books %}
+        <div class="col-3">
+          <a href="/book/search/result/{{book.id}}" class="img_area"
+            ><img
+              class="img"
+              src="{{book.book_cover}}"
+              style="
+                height: 380px;
+                width: 280px;
+                margin-right: 10px;
+                margin-bottom: 10px;
+              "
+            />
+            <p class="hover_text">{{book.book_title}}</p></a
+          ><span>{{book.book_title}}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+  <div class="container" style="height: 400px;">
+    <div class="row mt-5"></div>
+    <div
+      style="
+        margin-top: 100px;
+        margin-left: 100px;
+        width: 1000px;
+        height: 72px;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 40px;
+      "
+    >
+      <form action="" method="get" action=".">
+        <select
+          name="selectbar"
+          id="selectbar"
+          style="
+            height: 65px;
+            width: 300px;
+            margin-top: 2.5px;
+            border: 0.2px solid transparent;
+            border-top-left-radius: 40px;
+            border-bottom-left-radius: 40px;
+          "
+        >
+          <option class="text-center" value="1">도서명</option>
+          <option class="text-center" value="2">작가</option>
+          <option class="text-center" value="3">ISBN</option>
+        </select>
+        <input
+          type="search"
+          name="searchword"
+          id="search"
+          style="height: 65px; width: 600px; border: 0.2px solid white"
+        />
+        <input
+          type="submit"
+          value="🔍"
+          style="
+            height: 65px;
+            width: 88px;
+            background-color: transparent;
+            border: 0.5px solid white;
+            border-top-right-radius: 40px;
+            border-bottom-right-radius: 40px;
+          "
+        />
+      </form>
+    </div>
+    <div class="row mt-5"></div>
+  </div>
+</div>
+{% endif %} {% endblock %}
